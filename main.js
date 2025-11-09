@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rlResult.classList.toggle('rl-error', !ok);
     rlOverlay.hidden = false;
     rlClose.focus();
-    // if (ok) setTimeout(()=>window.location.href='siguiente.html', 800);
+    if (ok) setTimeout(()=>window.location.href='menu/index.html', 800);
   }
 
   function closePopup() {
