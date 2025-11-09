@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mensaje para Mi Amor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js" defer></script>
+</head>
+
+<body>
+
+    <!-- dentro del <body>, en este orden -->
+    <div class="textCont"></div>
+
+    <div id="rl-riddle" class="rl-riddle" hidden>
+        <label for="rl-input">Escribe la respuesta al acertijo:</label>
+        <div class="rl-row">
+            <input id="rl-input" placeholder="Tu respuesta…" autocomplete="off" />
+            <button id="rl-send">Aceptar</button>
+        </div>
+        <div id="rl-msg" class="rl-msg"></div>
+    </div>
+
+    <div id="rl-overlay" class="rl-overlay" hidden>
+        <div class="rl-modal">
+            <div id="rl-result" class="rl-result">ACCESS …</div>
+            <button id="rl-close" class="rl-close-btn">OK</button>
+        </div>
+    </div>
+</body>
+</html>

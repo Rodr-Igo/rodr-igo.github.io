@@ -1,0 +1,154 @@
+/* Variables */
+:root {
+  --theme-color: #285685;
+  --font-color: #33ff66;
+  --shade1: rgba(242, 38, 19, 0.5);
+  --shade2: rgba(0, 255, 255, 0.5);
+  --theme-font: 'VT323', monospace;
+}
+
+/* Base */
+* { box-sizing: border-box; }
+body{
+    background-color: black;
+    display:flex;
+    font-family: var(--theme-font);
+    color: var(--font-color);
+    flex-direction:column;
+    align-items:center;
+}
+
+/* Contenedor del texto */
+.textCont{
+    font-size: 150%;
+    width:60%;
+    margin-top:6%;
+}
+
+/* Cursor parpadeante */
+.textCont::after {
+    content: "|";
+    animation: blinky 1s linear infinite;
+}
+@keyframes blinky {
+    0% {opacity:0;}
+    49.9% {opacity:0;}
+    50% {opacity:1;}
+    99.9% {opacity:1;}
+}
+
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 100;
+}
+footer > a {
+    background-color: var(--theme-color);
+    color: var(--font-color);
+    font-weight: bold;
+    font-family: "Megrim", cursive;
+    font-size: 110%;
+    text-decoration: none;
+    padding: 5px 20px;
+    border-radius: 3px;
+    transition: color 0.5s linear, box-shadow 0.5s ease-in, background-color .3s ease;
+}
+footer > a:hover {
+    color: rgba(34, 49, 63, 0.9);
+    background-color: #fff;
+    text-shadow: -1px -2px 1px var(--shade1), 2px 2px var(--shade2);
+    box-shadow: 0 5px;
+}
+
+/* Pequeño ajuste responsive */
+@media (max-width: 640px) {
+    .textCont { width: 85%; margin: 12% 7%; font-size: 130%; }
+}
+
+/* ===== Carta en verde (si no lo tienes ya) ===== */
+.textCont { color: #33ff66; }
+
+/* Input del acertijo justo debajo del texto */
+#rl-riddle,
+.rl-riddle{                /* por si usas id o clase */
+    width:60%;
+    margin:25px 0 0 0;       /* debajo del texto */
+    display:block;           /* no grid/no flex aquí */
+    text-align:left;
+    position:static !important;  /* por si algo lo posicionaba */
+    float:none !important;       /* por si algún float lo empuja */
+    align-self:auto !important;  /* ignora auto-placement del flex */
+}
+
+/* Label arriba */
+.rl-riddle label{
+    display: block;
+    margin-bottom: 10px;
+    color: #9aa6b2;
+    font-size: 18px;
+}
+
+/* Input + botón en fila */
+.rl-row{
+    display:flex;
+    gap:10px;
+}
+
+/* Input */
+.rl-riddle input{
+    flex:1;
+    min-width:240px;
+    padding:10px 12px;
+    border-radius:6px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.08);
+    color:#33ff66;
+    font-family:inherit;
+}
+
+/* Botón */
+.rl-riddle button{
+    padding:10px 16px;
+    border:none;
+    border-radius:6px;
+    background:#285685;
+    color:#fff;
+    cursor:pointer;
+}
+
+/* Mensaje de error */
+.rl-msg{
+    margin-top: 10px;
+    color: #ff8a8a;
+}
+
+/* ===== Popup minimal ===== */
+.rl-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.65);
+    display:flex; align-items:center; justify-content:center;
+    z-index:9999;
+}
+.rl-modal{
+    width:min(92vw,520px);
+    background:linear-gradient(180deg,#101010,#0b0b0b);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:12px; padding:28px 22px; text-align:center;
+    color:#e8e8e8; box-shadow:0 20px 60px rgba(0,0,0,.7);
+}
+.rl-result{
+    font-family:'VT323', monospace;
+    font-size:34px; letter-spacing:2px; margin-bottom:18px;
+}
+.rl-close-btn{
+    padding:8px 18px; border-radius:8px; border:none;
+    background:#285685; color:#fff; cursor:pointer;
+}
+
+/* colores de estado */
+.rl-success{ color:#9fff9f; }
+.rl-error{ color:#ff8a8a; }
+
+/* Garantiza que el atributo [hidden] siempre oculte */
+[hidden]{display:none!important;}
