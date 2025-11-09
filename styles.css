@@ -30,11 +30,18 @@ body{
     content: "|";
     animation: blinky 1s linear infinite;
 }
+
+.no-caret::after{
+  content: "";
+  animation: none !important;
+}
+
 @keyframes blinky {
     0% {opacity:0;}
     49.9% {opacity:0;}
     50% {opacity:1;}
     99.9% {opacity:1;}
+    100%{opacity:0}
 }
 
 /* Footer */
@@ -86,8 +93,15 @@ footer > a:hover {
 .rl-riddle label{
     display: block;
     margin-bottom: 10px;
-    color: #9aa6b2;
-    font-size: 18px;
+    font-family: 'VT323', monospace;
+    color: var(--font-color, #33ff66);
+    font-size: 150%;
+}
+
+.rl-riddle label::after{
+  content: " |";
+  animation: blinky 1s linear infinite;
+  margin-left: 4px;
 }
 
 /* Input + botón en fila */
@@ -102,10 +116,22 @@ footer > a:hover {
     min-width:240px;
     padding:10px 12px;
     border-radius:6px;
-    border:1px solid rgba(255,255,255,.1);
-    background:rgba(255,255,255,.08);
-    color:#33ff66;
-    font-family:inherit;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    color: var(--font-color, #33ff66);
+    caret-color: var(--font-color, #33ff66);
+    font-family: 'VT323', monospace;
+}
+
+.rl-riddle input::placeholder{
+  color: color-mix(in srgb, var(--font-color, #33ff66) 60%, #0b0b0b);
+  opacity: .8;
+}
+
+.rl-riddle input:focus{
+  outline: none;
+  border-color: var(--font-color, #33ff66);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--font-color, #33ff66) 35%, transparent);
 }
 
 /* Botón */
@@ -113,9 +139,18 @@ footer > a:hover {
     padding:10px 16px;
     border:none;
     border-radius:6px;
-    background:#285685;
-    color:#fff;
+    background: var(--font-color, #33ff66);
+    color: #0b0b0b;
+    font-family: 'VT323', monospace;
     cursor:pointer;
+}
+
+.rl-riddle button:hover{
+  filter: brightness(1.1);
+}
+
+.rl-riddle button:active{
+  transform: translateY(1px);
 }
 
 /* Mensaje de error */

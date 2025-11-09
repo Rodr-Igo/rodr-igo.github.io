@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(typeNext, interval(chars[i]));
     } else {
       // terminó => mostrar input
+      textEl.classList.add("no-caret");
       setTimeout(showRiddle, 300);
     }
   }
