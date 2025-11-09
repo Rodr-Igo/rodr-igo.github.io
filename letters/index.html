@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Jennie — Pink Letter Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Jennie Letters 💌</h1>
+        <div class="subtitle">Tap an envelope to open a heartfelt message — open 4 to unlock the secret letter ✨</div>
+      </div>
+      <div style="text-align:right">
+        <div class="subtitle">Made for you • Cute & Pink</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="home">
+        <div class="grid" id="grid"></div>
+      </section>
+
+      <section class="reader" id="reader">
+        <div class="letter-head">
+          <div>
+            <div class="big-title" id="r-title">Letter</div>
+            <div class="small-muted" id="r-sub">Type • Date</div>
+          </div>
+          <div>
+            <button id="r-copy" class="copy-btn">Copy</button>
+          </div>
+        </div>
+        <div class="content" id="r-content"></div>
+        <button class="back" id="r-back">Back to Letters</button>
+      </section>
+    </main>
+
+    <footer>Tip: Tap the envelopes gently on mobile. The secret letter appears after 4 unique opens.</footer>
+
+    <!-- Botón volver (ajusta la ruta a tu menú si quieres) -->
+    <a class="btn-home" href="../menu/index.html">↩ Volver</a>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

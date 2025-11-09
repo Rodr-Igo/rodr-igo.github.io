@@ -187,3 +187,47 @@ footer > a:hover {
 
 /* Garantiza que el atributo [hidden] siempre oculte */
 [hidden]{display:none!important;}
+
+/* Tablet y abajo */
+@media (max-width: 992px){
+  .textCont{ width: 72%; margin-top: 8%; }
+  .rl-riddle{ width: 72%; }
+}
+
+/* Móvil grande (<=768px) */
+@media (max-width: 768px){
+  .textCont{
+    width: 86%;
+    margin-top: 10%;
+    font-size: clamp(16px, 3.5vw, 22px);
+    line-height: 1.7;
+  }
+  .rl-riddle{ width: 86%; }
+  .rl-row{ flex-direction: column; gap: 12px; }
+  .rl-riddle button{ width: 100%; }
+}
+
+/* Móvil pequeño (<=480px) */
+@media (max-width: 480px){
+  .textCont{
+    width: 92%;
+    margin-top: 12%;
+    font-size: clamp(15px, 4.2vw, 20px);
+    line-height: 1.75;
+  }
+  .rl-riddle{ width: 92%; }
+
+  /* reduce glow y bordes para pantallas densas */
+  .rl-riddle input:focus{
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--font-color, #33ff66) 28%, transparent);
+  }
+}
+
+/* Soporte notch en iOS (safe areas) */
+@supports (padding: max(0px)){
+  body{
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+}
