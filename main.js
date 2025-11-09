@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function interval(letter) {
     return (letter === ';' || letter === '.' || letter === ',')
       ? Math.floor(Math.random() * 500 + 500)
-      : Math.floor(Math.random() * 80 + 5);
+      : Math.floor(Math.random() * 60 + 5);
   }
 
   function typeNext() {
@@ -73,7 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   rlSend.addEventListener('click', handleRiddle);
-  rlInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleRiddle(); });
+  rlInput.addEventListener('keydown', e => {  
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        handleRiddle();
+    }
+  });
   rlClose.addEventListener('click', closePopup);
 
   // start!
