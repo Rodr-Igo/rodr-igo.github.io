@@ -198,3 +198,98 @@ window.addEventListener('keydown', e=>{
   if(e.key==='1') openLetter(letters[0]);
   if(e.key==='5' && openedUniqueCount()>=4) openSpecial();
 });
+
+/* ===== Fondo de corazones (overlay) ===== */
+/* hearts.js – spawner idéntico al del menú */
+(function () {
+  const svg = document.getElementById('hearts-layer');
+  if (!svg) return;
+
+  // bbox del símbolo para fijar correctamente el transformOrigin
+  // (estos números son el centro del <symbol> de ~115x103 que usas)
+  const ORIGIN_X = 57.556226; // ≈ center x del símbolo
+  const ORIGIN_Y = 51.892971; // ≈ center y del símbolo
+  const HREF = '#heart';
+
+  // Tamaño actual del viewport svg (lo recalculamos en resize)
+  let vw = svg.clientWidth;
+  let vh = svg.clientHeight;
+
+  const rnd = (min, max) => Math.random() * (max - min) + min;
+  const rndInt = (min, max) => Math.floor(rnd(min, max));
+
+  function updateSize() {
+    vw = svg.clientWidth;
+    vh = svg.clientHeight;
+    // Asegura que el viewBox recorra la pantalla actual
+    svg.setAttribute('viewBox', `0 0 ${vw} ${vh}`);
+  }
+  updateSize();
+  window.addEventListener('resize', updateSize);
+
+  // Crea un <use> en una posición aleatoria
+  function spawnOne() {
+    const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', HREF);
+    use.setAttribute('class', 'heart-pop');
+    svg.appendChild(use);
+
+    // Posición aleatoria con márgenes para que no “corten” en los bordes
+    const x = rnd(60, vw - 60);
+    const y = rnd(60, vh - 60);
+
+    // Rotación y escala aleatoria
+    const rot = rnd(-18, 18);
+    const sc = rnd(0.62, 1.05);
+
+    // Opacidad base
+    use.style.opacity = 0.9;
+
+    // La magia: GSAP escribe un "matrix(...)" que verás en el inspector,
+    // igual que en el menú. Usamos el mismo origen del símbolo:
+    TweenMax.set(use, {
+      svgOrigin: `${ORIGIN_X} ${ORIGIN_Y}`,
+      transformOrigin: '0px 0px',
+      x, y, rotation: rot, scale: sc
+    });
+
+    // Animación tipo "pop-in → flota → desvanece"
+    const sMid = rnd(0.8, 1.15);
+    const rise = rnd(12, 22);     // cuánto sube
+    const drift = rnd(-12, 12);   // leve deriva lateral
+    const t1 = 0.7, t2 = 0.7, t3 = 0.3;
+
+    const tl = new TimelineMax({
+      repeat: 1,
+      yoyo: true,
+      onComplete: () => {
+        // segunda fase: subida + fade-out, como el menú
+        TweenMax.to(use, t3, {
+          y: `-=${rise}`,
+          x: `+=${drift}`,
+          opacity: 0,
+          ease: Power1.easeOut,
+          onComplete: () => use.parentNode && use.parentNode.removeChild(use)
+        });
+      }
+    });
+
+    tl.from(use, t1, { scale: 0, ease: Power2.easeOut })
+      .to(use, t2, { scale: sMid, ease: Power1.easeInOut });
+  }
+
+  // Disparo periódico con intervalo aleatorio (como el menú)
+  let t = null;
+  function loop() {
+    // entre 100ms y 700ms para un flujo rico
+    const delay = rndInt(100, 700);
+    spawnOne();
+    t = setTimeout(loop, delay);
+  }
+  loop();
+
+  // Unos corazones iniciales para “llenar” al cargar
+  for (let i = 0; i < 6; i++) spawnOne();
+})();
+
+

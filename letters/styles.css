@@ -3,12 +3,11 @@
 }
 
 *{ box-sizing:border-box }
-html,body{ height:100%; margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial }
+html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
 body{
-  background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
-  color: var(--text);
-  display:flex; align-items:center; justify-content:center;
-  padding: 18px;
+  background: #ff93a6;
+  color:var(--text);
+  display:flex;align-items:center;justify-content:center;padding:18px;
 }
 
 .wrap{ width:100%; max-width:980px }
@@ -137,3 +136,24 @@ footer{ margin-top:12px; color:#7a4660; font-size:13px; text-align:center }
     padding-bottom: max(18px, env(safe-area-inset-bottom));
   }
 }
+/* Overlay de corazones como en el menú */
+/* Capa de corazones: igual que en el menú */
+#hearts-layer{
+  position:absolute; 
+  inset:0;
+  width:100%; 
+  height:100%;
+  display:block;
+  z-index:0;           /* debajo de tu contenido */
+  pointer-events:none;
+  opacity:.6;          /* misma “niebla” del menú */
+}
+
+/* Colores del corazón (mismos que el menú) */
+#hearts-layer .o_heart{ fill:#FFB3C3; }
+.o_heart{ fill:#FFB3C3; }
+#hearts-layer .i_heart{ fill:#FCE3E9; }
+.i_heart{ fill:#FCE3E9; }
+
+/* el contenido por encima del overlay */
+.wrap{position:relative; z-index:1;}
