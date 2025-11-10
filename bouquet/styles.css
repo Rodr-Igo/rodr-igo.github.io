@@ -1,0 +1,107 @@
+:root{
+  --beige:#F9F9EE;
+  --paper:#ffffff;
+  --ink:#111;
+  --stack-w: 260px;   /* ancho de la “ramita” central donde apilan flores */
+  --overlap-x: -1rem; /* emula Tailwind -space-x-4  */
+  --overlap-y: -5rem; /* emula Tailwind -space-y-20 */
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--beige);font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;color:var(--ink)}
+
+.page{
+  max-width: 420px;   /* mobile-first, bien centrado */
+  margin: 0 auto;
+  padding: 16px 12px 64px;
+  text-align:center;
+}
+
+.headline{
+  margin: 6px 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity:.85;
+}
+
+/* --- Bouquet --- */
+.bouquet{
+  position: relative;
+  width: 100%;
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 8px;
+}
+
+.bush{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+  width: 95%;
+  max-width: 360px;
+  height: auto;
+  pointer-events:none;
+  user-select:none;
+}
+.bush--bg{ z-index: 0; opacity: .95; }
+.bush--top{ z-index: 10; }
+
+/* Contenedor de flores: flex + wrap + “reverse” con overlap */
+.stack{
+  position: relative;
+  z-index: 5;
+  width: var(--stack-w);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  /* el original usa wrap-reverse; aquí logramos el mismo look con órdenes y solapes */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Cada “celda” de flor */
+.flower{
+  position: relative;
+  padding-top: 1rem;          /* como pt-4 */
+  margin: var(--overlap-y) var(--overlap-x); /* solape negativo X/Y */
+  display:flex; justify-content:center; align-items:center;
+}
+
+.flower img{
+  display:block;
+  height:auto;
+  filter: drop-shadow(0 2px 0 rgba(0,0,0,.06));
+  transition: transform .2s ease;
+}
+.flower img:hover{ transform: scale(1.05) rotate(var(--rot, 0deg)); }
+
+/* --- Tarjeta --- */
+.card{
+  margin: 8px auto 0;
+  max-width: 320px;
+  transform: translateY(-36px) rotate(-2deg);
+  filter: drop-shadow(0 8px 10px rgba(0,0,0,.28));
+}
+.card__inner{
+  background: var(--paper);
+  border: 1.5px solid #000;
+  padding: 18px 16px 20px;
+  text-align:left;
+  border-radius: 2px;
+}
+.card__to{margin:0 0 8px;font-family: "Courier New", ui-monospace, monospace}
+.card__msg{margin:0 0 12px; line-height: 1.35}
+.card__from{margin:0}
+
+/* --- Un poco de ajuste en pantallas grandes --- */
+@media (min-width:480px){
+  :root{
+    --stack-w: 300px;
+    --overlap-y: -4.5rem;
+  }
+  .bush{max-width: 420px}
+  .card{max-width: 360px; transform: translateY(-44px) rotate(-2deg);}
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bouquet</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <h2 class="headline">Hi, I made this bouquet for you!</h2>
+
+      <section class="bouquet">
+        <!-- fondo del bush -->
+        <img class="bush bush--bg" src="./assets/color/bush-1.png" alt="bush background" />
+
+        <!-- stack de flores (JS lo llena) -->
+        <div id="flowers" class="stack" aria-label="flowers layer"></div>
+
+        <!-- capa superior del bush -->
+        <img class="bush bush--top" src="./assets/color/bush-1.png" alt="" aria-hidden="true" />
+      </section>
+
+      <!-- Tarjeta -->
+      <article class="card">
+        <div class="card__inner">
+          <p class="card__to">Dear Lizeth</p>
+          <p class="card__msg">
+            Se que no llevamos mucho tiempo de conocernos y la verdad no es que
+            pueda escribir mucho acerca de ti pero lo que si puedo decirte es
+            que si pretendo ser alguien en quien puedas confiar y con el tiempo
+            ser más cercanos...
+            <br /><br />
+            PD: Me gusta mucho la idea de la date — estaré planeando desde
+            mañana para ver qué podemos hacer sin tanta gente.
+          </p>
+          <p class="card__from">Sincerely,</p>
+          <p class="card__from">Rodrigo</p>
+        </div>
+      </article>
+    </main>
+
+    <!-- Defer para que el DOM exista al inicializar -->
+    <script src="./bouquet.js" defer></script>
+  </body>
+</html>
