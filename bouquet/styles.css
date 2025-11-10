@@ -30,23 +30,31 @@ html,body{
   text-align:center;
 }
 .brand{width:160px; height:auto; margin:10px auto 12px; display:block}
-.headline{margin:6px 0 16px; font-size:14px; opacity:.85;}
+.headline{
+    margin: 30px 0 16px;
+    font-size:22px; 
+    opacity:.85;}
 .bouquet-wrapper {
   margin-top: 60px;  /* Separa el óvalo del texto */
   position: relative;
 }
 /* ===== ESCENARIO (óvalo) ===== */
 .bouquet-stage{
+  top: -30px;
+  position:relative;
   left: 50%;
   transform: translateX(-50%);
-  position: relative;
-  display: grid;
-  place-items: center;
-  margin-top: 12px;
+  width: 430px;
+  height: 460px; 
+  background: #f9f7d8;
+  border-radius: 50%;
+  z-index: 0;
 }
 .bouquet-stage::before{
   content:"";
-  position:absolute; inset:0; margin:auto;
+  position:absolute; 
+  inset:0; 
+  margin:auto;
   width: clamp(260px, 60vw, 420px);
   height: clamp(260px, 60vw, 420px);
   border-radius: 999px;
@@ -94,7 +102,7 @@ html,body{
 
 /* ===== Tarjeta ===== */
 .card{
-  margin: 8px auto 0;
+  margin: -80px auto 0;
   max-width: 320px;
   transform: translateY(-36px) rotate(-2deg);
   filter: drop-shadow(0 8px 10px rgba(0,0,0,.28));
