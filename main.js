@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ===== ACERTIJO + POPUP =====
-  const RL_ACCEPT = 'pecesito';
+  const RL_ACCEPT = 'pececito';
   const rlWrap   = document.getElementById('rl-riddle');
   const rlInput  = document.getElementById('rl-input');
   const rlSend   = document.getElementById('rl-send');
