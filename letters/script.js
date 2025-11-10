@@ -1,111 +1,225 @@
-// Datos
+// ========= DATOS =========
+// Añadí el bloque "track" a cada carta. Rellena url y cover con tus datos reales de Spotify.
 const letters = [
   {
-    id:1, title:'For Being With Me', type:'Thank you', text:`Even in a crowded room, my eyes always search for you — like it’s the only thing they know.
+    id:1,
+    title:'For Being With Me',
+    type:'Dia 1',
+    text:`Even in a crowded room, my eyes always search for you — like it’s the only thing they know.
 
-Thank you for sitting beside me through quiet and loud. You make my world gentle and bright.`
+Thank you for sitting beside me through quiet and loud. You make my world gentle and bright.`,
+    track: {
+      title: 'El Dueño De Tu Amor — DannyLux',
+      url: 'https://open.spotify.com/track/3CJaDcjZKse7X7eVUukQJB?si=071da5c3a63b4ba0',
+      cover: 'https://i.scdn.co/image/ab67616d0000b27349f4f85b9c86c1b443415239'
+    }
   },
   {
-    id:2, title:'Sorry & Thankful', type:'Apology & Thanks', text:`I am sorry for the times I faltered and for the words I didn't say.
+    id:2,
+    title:'Sorry & Thankful',
+    type:'Dia 2',
+    text:`I am sorry for the times I faltered and for the words I didn't say.
 
-Thank you for forgiving me with a smile that feels like home. You taught my heart patience.`
+Thank you for forgiving me with a smile that feels like home. You taught my heart patience.`,
+    track: {
+      title: 'Song B — Artist',
+      url: 'https://open.spotify.com/track/yyyyyyyyyyyyyyyyyyyyyy',
+      cover: 'https://i.scdn.co/image/ab67616d0000b273yyyyyyyyyyyyyyyyyyyyyy'
+    }
   },
   {
-    id:3, title:'You are Sunshine', type:'Praise', text:`I’ve met a thousand people, but only your presence feels like sunlight on my skin.
+    id:3,
+    title:'You are Sunshine',
+    type:'Dia 3',
+    text:`I’ve met a thousand people, but only your presence feels like sunlight on my skin.
 
-Your laugh, your silence, your little gestures — everything about you feels like a soft sunrise.`
+Your laugh, your silence, your little gestures — everything about you feels like a soft sunrise.`,
+    track: {
+      title: 'Song C — Artist',
+      url: 'https://open.spotify.com/track/zzzzzzzzzzzzzzzzzzzzzz',
+      cover: 'https://i.scdn.co/image/ab67616d0000b273zzzzzzzzzzzzzzzzzzzzzz'
+    }
   },
   {
-    id:4, title:'If You Remember', type:'Love Note', text:`Even if the whole world forgets my name, I’d still be complete as long as you remember me.
+    id:4,
+    title:'If You Remember',
+    type:'Dia 4',
+    text:`Even if the whole world forgets my name, I’d still be complete as long as you remember me.
 
-You are my favorite hello and the calm at the end of my day.`
+You are my favorite hello and the calm at the end of my day.`,
+    track: {
+      title: 'Song D — Artist',
+      url: 'https://open.spotify.com/track/wwwwwwwwwwwwwwwwwwwwww',
+      cover: 'https://i.scdn.co/image/ab67616d0000b273wwwwwwwwwwwwwwwwwwwwww'
+    }
   }
 ];
 
 const special = {
-  id:5, title:'Big Letter — For Jennie', type:'Secret', text:`My dearest Jennie,
+  id:5,
+  title:'Big Letter — For Jennie',
+  type:'Dia 5',
+  text:`My dearest Jennie,
 
 This one is the one I kept for when I understood how to say every little thing my heart means. You have been my quiet miracle — the gentle that untangles my loudest fears. When life felt too heavy, your presence offered a soft place to breathe. When I lost words, your eyes taught me new ones.
 
 Thank you for being patient, for laughing at my terrible jokes, for the way you hold space for my dreams, and for simply being you — brave, kind, and endlessly luminous. If life lets me be anything, let me be someone who cherishes you as you deserve.
 
-Yours, always.`
+Yours, always.`,
+  // Si quieres que la "Secret" también tenga canción:
+  track: {
+    title: 'Secret Track — Artist',
+    url: 'https://open.spotify.com/track/secrettrackid',
+    cover: 'https://i.scdn.co/image/ab67616d0000b273secretcoverid'
+  }
 };
 
-// Estado
-const STORAGE_KEY = 'jennie_opened_letters';
+// ========= ESTADO / STORAGE =========
+const STORAGE_KEY = 'liz_opened_letters';
 let opened = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 
-// Referencias
+// ========= REFERENCIAS AL DOM (algunas quedan por compatibilidad) =========
 const grid     = document.getElementById('grid');
-const reader   = document.getElementById('reader');
-const rTitle   = document.getElementById('r-title');
-const rSub     = document.getElementById('r-sub');
-const rContent = document.getElementById('r-content');
-const rBack    = document.getElementById('r-back');
-const rCopy    = document.getElementById('r-copy');
+const reader   = document.getElementById('reader');   // ya no lo usamos, pero lo conservamos
+const rTitle   = document.getElementById('r-title');  // idem
+const rSub     = document.getElementById('r-sub');    // idem
+const rContent = document.getElementById('r-content');// idem
+const rBack    = document.getElementById('r-back');   // idem
+const rCopy    = document.getElementById('r-copy');   // idem
 
-// Render grid
+// ========= RENDER =========
 function buildGrid(){
-  grid.innerHTML='';
+  grid.innerHTML = '';
   letters.forEach((L,i)=> grid.appendChild(letterCard(L, i+1)));
   const unlocked = openedUniqueCount() >= 4;
   grid.appendChild(specialEnvelope(unlocked));
 }
 
+// Cada carta ahora es un <a> con portada y título que abre Spotify en nueva pestaña.
+// ¡Seguimos marcando "opened" para que Secret se desbloquee tras 4 clics!
 function letterCard(L, idx){
-  const wrap = document.createElement('div'); wrap.style.textAlign='center';
-  const env = document.createElement('div'); env.className='env bob'; env.role='button'; env.ariaLabel=L.title;
+  const wrap = document.createElement('div');
+  wrap.style.textAlign = 'center';
 
-  const flap = document.createElement('div'); flap.className='flap';
-  const body = document.createElement('div'); body.className='body';
-  const seal = document.createElement('div'); seal.className='seal'; seal.textContent='❤';
+  const env = document.createElement('div');
+  env.className = 'env bob';
+  env.setAttribute('role','button');
+  env.setAttribute('aria-label', L.title);  // <— (A) usa atributo real
+  env.dataset.id = String(L.id);            // <— (B) id para la delegación
+
+  const flap = document.createElement('div'); flap.className = 'flap';
+  const body = document.createElement('div'); body.className = 'body';
+  const seal = document.createElement('div'); seal.className = 'seal'; seal.textContent = '❤';
   env.append(flap, body, seal);
 
-  const label = document.createElement('div'); label.className='label'; label.textContent=`Letter ${idx}`;
-  const typ   = document.createElement('div'); typ.className='type'; typ.textContent=L.type;
+  const label = document.createElement('div'); label.className = 'label'; label.textContent = `Carta ${idx}`;
+  const typ   = document.createElement('div'); typ.className = 'type';   typ.textContent   = L.type;
 
-  env.onclick = ()=> openLetter(L);
+  // ❌ Ya NO pongas env.addEventListener('click', ...) aquí
   env.ontouchstart = ()=> env.classList.add('touched');
   env.ontouchend   = ()=> env.classList.remove('touched');
 
-  wrap.append(env, label, typ);
+  const trackBlock = makeTrackLink(L);      // tu bloque de Spotify
+
+  wrap.append(env, label, typ, trackBlock);
   return wrap;
 }
 
-function specialEnvelope(unlocked){
-  const wrap = document.createElement('div'); wrap.style.textAlign='center';
-  const env = document.createElement('div'); env.className='env bob locked';
+// Cualquier click que ocurra sobre un .env abre su carta
+grid.addEventListener('click', (e) => {
+  // Si fue en un enlace (Spotify), no abrir carta
+  if (e.target.closest('a')) return;
 
-  const flap = document.createElement('div'); flap.className='flap';
-  const body = document.createElement('div'); body.className='body';
-  const seal = document.createElement('div'); seal.className='seal'; seal.textContent='★';
+  const env = e.target.closest('.env');
+  if (!env) return;
+
+  const id = Number(env.dataset.id);
+  const L = letters.find(x => x.id === id);
+  if (L) openLetter(L);
+});
+
+// "Secret": bloqueada hasta abrir 4. Si está desbloqueada, también redirige a Spotify
+function specialEnvelope(unlocked){
+  const wrap = document.createElement('div');
+  wrap.style.textAlign = 'center';
+
+  const env = document.createElement('div');
+  env.className = 'env bob' + (unlocked ? '' : ' locked');
+
+  const flap = document.createElement('div'); flap.className = 'flap';
+  const body = document.createElement('div'); body.className = 'body';
+  const seal = document.createElement('div'); seal.className = 'seal'; seal.textContent = '★';
   env.append(flap, body, seal);
 
-  const label = document.createElement('div'); label.className='label'; label.textContent='Secret';
-  const typ   = document.createElement('div'); typ.className='type'; typ.textContent='Locked';
+  const label = document.createElement('div'); label.className = 'label'; label.textContent = 'Secret';
+  const typ   = document.createElement('div'); typ.className   = 'type';   typ.textContent   = unlocked ? 'Unlocked' : 'Locked';
 
-  const lock = document.createElement('div'); lock.className='lock'; lock.textContent='🔒';
-  env.appendChild(lock);
+  if(!unlocked){
+    const lock = document.createElement('div');
+    lock.className = 'lock';
+    lock.textContent = '🔒';
+    env.appendChild(lock);
 
-  if(unlocked){
-    typ.textContent='Unlocked';
-    lock.remove();
-    env.onclick = ()=> openSpecial();
-    setTimeout(()=> sparkle(env), 200);
-  } else {
     env.onclick = ()=> {
       env.animate(
         [{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],
         {duration:360}
       );
     };
+
+    // No mostramos link de Spotify si está bloqueado
+    wrap.append(env, label, typ);
+    return wrap;
   }
 
-  wrap.append(env, label, typ);
+  // Desbloqueada: abre el lector normal + sparkle
+  env.onclick = ()=> openSpecial();
+  setTimeout(()=> sparkle(env), 200);
+
+  // (Opcional) si añadiste special.track, también mostramos su link
+  const trackBlock = special.track ? makeTrackLink(special) : document.createTextNode('');
+
+  wrap.append(env, label, typ, trackBlock);
   return wrap;
 }
 
+// Crea el bloque de Spotify: portada + título que abre en nueva pestaña.
+// También marca la carta como "abierta" para el conteo del Secret.
+function makeTrackLink(item){
+  const hasTrack = item.track && item.track.url;
+  const cont = document.createElement('div');
+  cont.className = 'track';
+
+  if(!hasTrack){
+    cont.style.display = 'none';
+    return cont;
+  }
+
+  const a = document.createElement('a');
+  a.href = item.track.url;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  a.className = 'track-link';
+  a.ariaLabel = `${item.title} — ${item.track.title}`;
+  a.addEventListener('click', () => markOpened(item.id)); // cuenta para desbloquear
+  a.addEventListener('click', ev => ev.stopPropagation());
+  const img = document.createElement('img');
+  img.className = 'track-cover';
+  img.alt = item.track.title || 'Song cover';
+  img.src = item.track.cover || '';
+  // Si no hay portada, escondemos el <img> y dejamos solo el título
+  if(!item.track.cover){ img.style.display = 'none'; }
+
+  const name = document.createElement('div');
+  name.className = 'track-title';
+  name.textContent = item.track.title || 'Open in Spotify';
+
+  a.append(img, name);
+  cont.appendChild(a);
+  return cont;
+}
+
+// ========= EFECTOS =========
 function sparkle(container){
   const s = document.createElement('div'); s.className='sparkle'; container.appendChild(s);
   for(let i=0;i<10;i++){
@@ -124,44 +238,7 @@ function sparkle(container){
   setTimeout(()=> s.remove(),2000);
 }
 
-async function openLetter(L){
-  markOpened(L.id);
-  document.querySelectorAll('.env').forEach(e=> e.classList.remove('open'));
-  const target = [...document.querySelectorAll('.env')].find(e=> e.ariaLabel===L.title);
-  if(target) target.classList.add('open');
-  await sleep(420);
-  showReader(L.title, L.type, L.text);
-}
-
-async function openSpecial(){
-  markOpened(special.id);
-  document.querySelectorAll('.env').forEach(e=> e.classList.remove('open'));
-  const target = [...document.querySelectorAll('.env')].find(e=> e.querySelector('.seal')?.textContent==='★');
-  if(target) target.classList.add('open');
-  await sleep(420);
-  showReader(special.title, special.type, special.text);
-}
-
-function showReader(title,type,text){
-  rTitle.textContent = title;
-  rSub.textContent   = `${type} • ${new Date().toLocaleDateString()}`;
-  rContent.textContent = text;
-  reader.classList.add('show');
-  document.querySelector('.home').style.display='none';
-}
-
-rBack.onclick = ()=>{
-  reader.classList.remove('show');
-  document.querySelector('.home').style.display='block';
-  document.querySelectorAll('.env').forEach(e=> e.classList.remove('open'));
-  buildGrid();
-};
-
-rCopy.onclick = ()=>{
-  navigator.clipboard.writeText(rContent.innerText).then(()=>flash('Copied letter'));
-};
-
-// Storage helpers
+// ========= STORAGE / HELPERS =========
 function markOpened(id){
   if(!opened.includes(id)){
     opened.push(id);
@@ -173,7 +250,7 @@ function openedUniqueCount(){
   return set.size;
 }
 
-// Utils
+// ========= UTILS (compatibilidad con tu código) =========
 const sleep = (ms)=> new Promise(res=> setTimeout(res,ms));
 function flash(msg){
   const el = document.createElement('div');
@@ -186,17 +263,19 @@ function flash(msg){
   setTimeout(()=> el.remove(),1600);
 }
 
-// Init
+// ========= INIT =========
 buildGrid();
 if(openedUniqueCount()>=4){
-  const envs = document.querySelectorAll('.env');
-  if(envs[envs.length-1]) sparkle(envs[envs.length-1]);
+  const cards = grid.querySelectorAll('.letter-card');
+  if(cards[cards.length-1]) sparkle(cards[cards.length-1]);
 }
 
-// Accesibilidad rápida
+// Accesos rápidos (opcional): ya no abren lector; ahora solo desbloquean y/o redirigen
 window.addEventListener('keydown', e=>{
-  if(e.key==='1') openLetter(letters[0]);
-  if(e.key==='5' && openedUniqueCount()>=4) openSpecial();
+  if(e.key==='1'){ markOpened(letters[0].id); window.open(letters[0].track.url, '_blank') }
+  if(e.key==='5' && openedUniqueCount()>=4){
+    markOpened(special.id); window.open(special.track.url, '_blank');
+  }
 });
 
 /* ===== Fondo de corazones (overlay) ===== */
