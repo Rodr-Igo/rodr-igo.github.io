@@ -1,46 +1,51 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bouquet</title>
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <main class="page">
-      <h2 class="headline">Hi, I made this bouquet for you!</h2>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bouquet</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="page">
+    <h2 class="headline">Amor! Un recuerdo de lo anterior Boutique!</h2>
 
-      <section class="bouquet">
-        <!-- fondo del bush -->
-        <img class="bush bush--bg" src="./assets/color/bush-1.png" alt="bush background" />
+    <div class="bouquet-wrapper">
+        <!-- STAGE: óvalo + ramo (bush + flores) -->
+        <div class="bouquet-stage">
+        <section class="bouquet">
+            <!-- bush de fondo -->
+            <img class="bush bush--bg" src="./assets/color/bush-1.png" alt="bush background" />
+            <!-- stack de flores (lo llena bouquet.js) -->
+            <div id="flowers" class="stack" aria-label="flowers layer"></div>
+            <!-- bush por encima -->
+            <img class="bush bush--top" src="./assets/color/bush-1-top.png" alt="" aria-hidden="true" />
+        </section>
+        </div>
 
-        <!-- stack de flores (JS lo llena) -->
-        <div id="flowers" class="stack" aria-label="flowers layer"></div>
-
-        <!-- capa superior del bush -->
-        <img class="bush bush--top" src="./assets/color/bush-1-top.png" alt="" aria-hidden="true" />
-      </section>
-
-      <!-- Tarjeta -->
-      <article class="card">
+        <!-- Tarjeta -->
+        <article class="card">
         <div class="card__inner">
-          <p class="card__to">Dear Lizeth</p>
-          <p class="card__msg">
+            <p class="card__to">Dear Lizeth</p>
+            <p class="card__msg">
             Se que no llevamos mucho tiempo de conocernos y la verdad no es que
-            pueda escribir mucho acerca de ti pero lo que si puedo decirte es
-            que si pretendo ser alguien en quien puedas confiar y con el tiempo
-            ser más cercanos...
+            pueda escribir mucho acerca de ti pero lo que si puedo decirte es que
+            si pretendo ser alguien en quien puedas confiar y con el tiempo ser
+            más cercanos...
             <br /><br />
             PD: Me gusta mucho la idea de la date — estaré planeando desde
             mañana para ver qué podemos hacer sin tanta gente.
-          </p>
-          <p class="card__from">Sincerely,</p>
-          <p class="card__from">Rodrigo</p>
+            </p>
+            <p class="card__from">Sincerely,</p>
+            <p class="card__from">Rodrigo</p>
         </div>
-      </article>
-    </main>
+        </article>
+  </div>
+  </main>
 
-    <!-- Defer para que el DOM exista al inicializar -->
-    <script src="./bouquet.js" defer></script>
-  </body>
+  <!-- botón volver -->
+  <a href="../menu/index.html" class="btn-back" aria-label="Volver">↩ Volver</a>
+
+  <script src="./bouquet.js" defer></script>
+</body>
 </html>

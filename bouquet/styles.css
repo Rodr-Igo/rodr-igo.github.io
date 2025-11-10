@@ -1,84 +1,98 @@
 :root{
-  --beige:#F9F9EE;
-  --paper:#ffffff;
-  --ink:#111;
-  --stack-w: 260px;   /* ancho de la “ramita” central donde apilan flores */
-  --overlap-x: -1rem; /* emula Tailwind -space-x-4  */
-  --overlap-y: -5rem; /* emula Tailwind -space-y-20 */
+  --bg-page: #F9F9EE;  /* beige del sitio original */
+  --oval:    #F5F5DC;  /* crema del óvalo */
+  --paper:   #fff;
+  --ink:     #111;
+
+  --stack-w: 260px;    /* ancho del “grid” de flores */
+  --overlap-x: -1rem;  /* emula -space-x-4  */
+  --overlap-y: -5rem;  /* emula -space-y-20 */
 }
 
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{background:var(--beige);font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;color:var(--ink)}
+html,body{
+    margin:0;
+    padding:0;
+    background:var(--bg-page);
+    color:var(--ink);
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+}
 
 .page{
-  max-width: 420px;   /* mobile-first, bien centrado */
+  max-width: 420px;
   margin: 0 auto;
-  padding: 16px 12px 64px;
+  padding: 12px 12px 64px;
   text-align:center;
 }
-
-.headline{
-  margin: 6px 0 16px;
-  font-size: 14px;
-  font-weight: 500;
-  opacity:.85;
+.brand{width:160px; height:auto; margin:10px auto 12px; display:block}
+.headline{margin:6px 0 16px; font-size:14px; opacity:.85;}
+.bouquet-wrapper {
+  margin-top: 60px;  /* Separa el óvalo del texto */
+  position: relative;
+}
+/* ===== ESCENARIO (óvalo) ===== */
+.bouquet-stage{
+  left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin-top: 12px;
+}
+.bouquet-stage::before{
+  content:"";
+  position:absolute; inset:0; margin:auto;
+  width: clamp(260px, 60vw, 420px);
+  height: clamp(260px, 60vw, 420px);
+  border-radius: 999px;
+  background: var(--oval);
+  z-index: 0;
+  box-shadow: 0 1px 0 rgba(0,0,0,.03) inset;
 }
 
-/* --- Bouquet --- */
+/* ===== Ramo ===== */
 .bouquet{
   position: relative;
   width: 100%;
   min-height: 360px;
   display: grid;
   place-items: center;
-  margin: 0 auto 8px;
 }
-
 .bush{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform: translate(-50%,-50%);
-  width: 95%;
-  max-width: 360px;
-  height: auto;
-  pointer-events:none;
-  user-select:none;
+  position:absolute; left:50%; top:50%;
+  transform:translate(-50%,-50%);
+  width:95%; max-width:360px; height:auto;
+  pointer-events:none; user-select:none;
 }
-.bush--bg{ z-index: 0; opacity: .95; }
-.bush--top{ z-index: 10; }
+.bush--bg{ z-index:1; opacity:.95 }
+.bush--top{ z-index:10 }
 
-/* Contenedor de flores: flex + wrap + “reverse” con overlap */
+/* stack de flores (JS inserta .flower dentro de #flowers) */
 .stack{
   position: relative;
-  z-index: 5;
+  z-index:5;
   width: var(--stack-w);
   margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  /* el original usa wrap-reverse; aquí logramos el mismo look con órdenes y solapes */
-  justify-content: center;
-  align-items: center;
+  display:flex; 
+  flex-wrap:wrap;
+  justify-content:center; 
+  align-items:center;
 }
-
-/* Cada “celda” de flor */
 .flower{
-  position: relative;
-  padding-top: 1rem;          /* como pt-4 */
-  margin: var(--overlap-y) var(--overlap-x); /* solape negativo X/Y */
+  position:relative;
+  padding-top:1rem; /* pt-4 */
+  margin: var(--overlap-y) var(--overlap-x);
   display:flex; justify-content:center; align-items:center;
 }
+.flower img{ display:block; height:auto; transition:transform .2s ease; filter:drop-shadow(0 2px 0 rgba(0,0,0,.06)); }
+.flower img:hover{ transform:scale(1.05) }
 
-.flower img{
-  display:block;
-  height:auto;
-  filter: drop-shadow(0 2px 0 rgba(0,0,0,.06));
-  transition: transform .2s ease;
-}
-.flower img:hover{ transform: scale(1.05) rotate(var(--rot, 0deg)); }
-
-/* --- Tarjeta --- */
+/* ===== Tarjeta ===== */
 .card{
   margin: 8px auto 0;
   max-width: 320px;
@@ -86,22 +100,44 @@ body{background:var(--beige);font-family:system-ui, -apple-system, Segoe UI, Rob
   filter: drop-shadow(0 8px 10px rgba(0,0,0,.28));
 }
 .card__inner{
-  background: var(--paper);
-  border: 1.5px solid #000;
-  padding: 18px 16px 20px;
+  background:var(--paper);
+  border:1.5px solid #000;
+  padding:18px 16px 20px;
   text-align:left;
-  border-radius: 2px;
 }
-.card__to{margin:0 0 8px;font-family: "Courier New", ui-monospace, monospace}
-.card__msg{margin:0 0 12px; line-height: 1.35}
+.card__to{margin:0 0 8px; font-family:"Courier New",ui-monospace,monospace}
+.card__msg{margin:0 0 12px; line-height:1.35}
 .card__from{margin:0}
 
-/* --- Un poco de ajuste en pantallas grandes --- */
-@media (min-width:480px){
-  :root{
-    --stack-w: 300px;
-    --overlap-y: -4.5rem;
+/* ===== Botón volver ===== */
+.btn-back{
+  position: fixed;
+  left: 12px; bottom: 12px;
+  padding: 8px 12px;
+  background:#fff; color:#444;
+  border:1px solid rgba(0,0,0,.15);
+  border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+  text-decoration:none;
+  font:500 14px/1 system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  display:inline-flex; align-items:center; gap:6px;
+  z-index:50;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn-back:hover{ transform:translateY(-1px); box-shadow:0 4px 10px rgba(0,0,0,.12) }
+.btn-back:active{ transform:translateY(0); box-shadow:0 2px 6px rgba(0,0,0,.08) }
+
+/* ===== Ajustes responsivos ===== */
+@media (max-width:480px){
+  .bush{max-width: 360px}
+  .bouquet-stage::before{
+    width: clamp(240px, 78vw, 320px);
+    height: clamp(240px, 78vw, 320px);
   }
-  .bush{max-width: 420px}
-  .card{max-width: 360px; transform: translateY(-44px) rotate(-2deg);}
+  .card{max-width: 300px; transform: translateY(-28px) rotate(-2deg);}
+}
+@media (min-width:480px){
+  :root{ --stack-w:300px; --overlap-y:-4.5rem }
+  .bush{max-width:420px}
+  .card{max-width:360px; transform: translateY(-44px) rotate(-2deg);}
 }
